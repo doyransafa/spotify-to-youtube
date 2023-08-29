@@ -2,7 +2,7 @@
 ## A Django project to create YouTube playlists based on Spotify playlists
 
 ## Project Demo Video:
-[YouTube Link]( https://youtu.be/xU_1QDqYgDU )
+# [YouTube Link]( https://youtu.be/xU_1QDqYgDU )
 
 <img width="721" alt="image" src="https://github.com/doyransafa/spotify-to-youtube/assets/72417108/84ab80c6-5e67-49a5-9b81-47819c4c44f2">
 
