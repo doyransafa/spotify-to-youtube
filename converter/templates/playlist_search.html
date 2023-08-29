@@ -1,0 +1,116 @@
+{% extends 'base.html' %} 
+
+{% block playlist_search %} 
+{% if messages %} 
+	{% for message in messages %}
+	<div
+		class="alert alert-dismissible fade show"
+		role="alert"
+	>
+		{{message}}
+		<button
+			type="button"
+			class="btn-close"
+			data-bs-dismiss="alert"
+			aria-label="Close"
+		></button>
+	</div>
+	{% endfor %} 
+{% endif %}
+
+<div class="container w-75">
+
+	<h1 class='mt-5 mb-4'>Search for a Playlist</h1>
+	<form method="post">
+		{% csrf_token %} {{ form.as_p }}
+	</form>
+
+	<h1 class='mt-5'>Added Playlists</h1>
+
+	<table class="table align-middle">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Img</th>
+				<th scope="col">Playlist</th>
+				<th scope="col">Remove</th>
+			</tr>
+		</thead>
+		<tbody class="table-group-divider">
+				{% for playlist in playlists %}
+				<tr>
+					<th scope="row">{{forloop.counter}}</th>
+					<td>
+						<img src="{{playlist.playlist_image}}" width="75" height="75" />
+					</td>
+					<td>
+						<a href="{% url 'playlist_details' playlist.id %}">
+						{{playlist.title}}
+						</a>
+					</td>
+					<td>
+						<button
+							type="button"
+							class="btn btn-sm btn-danger"
+							data-bs-toggle="modal"
+							data-bs-target="#exampleModal{{playlist.id}}"
+						>
+							Delete Playlist
+						</button>
+					</td>
+		
+		<!-- Modal -->
+		<div
+			class="modal fade"
+			id="exampleModal{{playlist.id}}"
+			tabindex="-1"
+			aria-labelledby="exampleModalLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">
+							Delete Playlist
+						</h1>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<form
+						id="delete-form"
+						method="post"
+						action='{% url "delete_playlist" playlist.id %}'
+					>
+						{% csrf_token %}
+						<div class="modal-body">
+							Are you sure to delete playlist
+							<b>{{playlist.title}}</b>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal"
+							>
+								Close
+							</button>
+							<button type="submit" class="btn btn-danger">
+								Delete
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+</div>
+
+{% endblock playlist_search %}

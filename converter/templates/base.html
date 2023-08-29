@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Spotify to YouTube</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+			crossorigin="anonymous"
+		/>
+	</head>
+
+	<nav class="navbar bg-body-tertiary">
+		<div class="container-md">
+			<a class="navbar-brand" href="{% url 'playlist_search' %}">
+				<img
+					src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1024px-Spotify_icon.svg.png?20220821125323"
+					alt="Spotify Logo"
+					width="45"
+					height="45"
+				/>
+				to
+				<img
+					src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg"
+					alt="Youtube Logo"
+					width="45"
+					height="33"
+				/>
+			</a>
+
+			<div>
+				{% if request.session.spotify_access_token %}
+				<a href="{% url 'spotify_add_all_playlists' %}" class="btn btn-outline-success">Add Your Own Playlists</a>
+				<a href="#" class="btn btn-success disabled">Spotify Auth Successful</a>
+				{%else%}
+				
+				<a href="{% url 'spotify_auth' %}" class="btn btn-outline-success">Authenticate with Spotify</a>
+				{% endif %} 
+				
+				{% if request.session.youtube_credentials %}
+				<a href="{% url 'youtube_auth' %}" class="btn btn-danger disabled">YouTube Auth Successful</a>
+				{%else%}
+				<a href="{% url 'youtube_auth' %}" class="btn btn-outline-danger">YouTube Auth</a>
+				{% endif %} 
+				
+			</div>
+		</div>
+	</nav>
+
+	<body>
+		{% block navbar %} {% endblock navbar %} 
+		{% block playlist_search %} {% endblock playlist_search %} 
+		{% block playlist_details %} {% endblock playlist_details %} 
+		{% block youtube_playlist %} {% endblock youtube_playlist %}
+
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>

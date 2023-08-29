@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% block youtube_playlist %}
+
+<div class="container w-75">
+
+	<div class="container mb-5 mt-5">
+		<div class="row">
+			<div class="col-3">
+				<img src="{{playlist.playlist_image}}" width="240" height="240" />
+			</div>
+			<div class="col-9 align-self-center">
+
+				<h1 class='display-1 '><a href="{{playlist.link}}" target="_blank"> {{playlist.title}} </a> </h1>
+				<h5>Owner: {{playlist.owner}} </h5>
+
+			</div>
+		</div>
+	</div>
+
+
+<h1 class='font-weight-bold text-center mb-5 text-bg-success p-3'> Playlist Created Succesfully!</h2>
+<h2 class='text-center'>
+	<a class='text-danger ' href="https://www.youtube.com/playlist?list={{youtube_id}}" target='_blank'>
+	<img
+		src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg"
+		alt="Youtube Logo"
+		width="45"
+		height="33"
+	/>
+		YouTube Playlist Link
+	
+</a>
+</h2>
+
+
+</div>
+
+{% endblock youtube_playlist %}

@@ -1,0 +1,100 @@
+{% extends 'base.html' %} {% block playlist_details %}
+
+<div class="container w-75">
+
+	<div class="container mb-5 mt-5">
+		<div class="row">
+			<div class="col-3">
+				<img src="{{playlist.playlist_image}}" width="240" height="240" />
+			</div>
+			<div class="col-9 align-self-center">
+
+				<h1 class='display-1 '><a href="{{playlist.link}}" target="_blank"> {{playlist.title}} </a> </h1>
+				<h5>Owner: {{playlist.owner}} - {{songs|length}} tracks </h5>
+
+			</div>
+		</div>
+	</div>
+
+
+	<table class="table align-middle">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Artist</th>
+				<th scope="col">Img</th>
+				<th scope="col">Track</th>
+				<th scope="col">Remove</th>
+			</tr>
+		</thead>
+		<tbody class="table-group-divider">
+			{% for song in songs %}
+			<tr>
+				<th scope="row">{{forloop.counter}}</th>
+				<td>{{song.artist}}</td>
+				<td>
+					<img src="{{song.album_image}}" width="50" height="50" />
+				</td>
+				<td>
+					<a href="{{song.song_link}}" target="_blank">
+						{{song.title}}
+					</a>
+				</td>
+				<td>
+					<button
+						type="button"
+						class="btn btn-sm btn-danger"
+						onclick="confirmRemoveSong('{{ song.title|escapejs }}', {{ playlist.id }}, {{ song.id }});"
+					>
+						Remove Song
+					</button>
+				</td>
+			</tr>
+			{% endfor%}
+		</tbody>
+	</table>
+
+	<div class="mt-3 mb-5">
+
+		{% if request.session.youtube_credentials %}
+
+		<a href="{% url 'generate_youtube_playlist' playlist.id %}" class="btn btn-success">
+			Create Playlist on YouTube!
+		</a>
+
+		{% endif %}
+
+		<button
+			type="button"
+			class="btn btn-warning"
+			onclick="confirmUpdatePlaylist({{ playlist.id }});"
+		>
+			Restore Original Playlist
+		</button>
+
+	</div>
+
+</div>
+
+<script>
+	function confirmRemoveSong(songTitle, playlistId, songId) {
+		if (
+			confirm(
+				`Are you sure you want to remove "${songTitle}" from the playlist?`,
+			)
+		) {
+			window.location.href = `/playlist/${playlistId}/song/${songId}`
+		}
+	}
+	function confirmUpdatePlaylist(playlistId) {
+		if (
+			confirm(
+				`Are you sure you want to update the playlist to its original?`,
+			)
+		) {
+			window.location.href = `/playlist/update/${playlistId}`
+		}
+	}
+</script>
+
+{% endblock playlist_details %}
